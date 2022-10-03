@@ -4,42 +4,57 @@ import webbrowser
 my_mic=speech_recognition.Microphone()
 rec=speech_recognition.Recognizer()
 
+#chrome_path = 'C:\Program Files\Google\Chrome\Application\chrome.exe'
+
 def listen():
     print('Listening...')
-    with my_mic as source:
-        audio=rec.listen(source)
-        grec=str(rec.recognize_google(audio))
-    print(grec)
-    return grec
+    try:
+        with my_mic as source:
+            rec.adjust_for_ambient_noise(source)
+            audio=rec.listen(source)
+            grec=str(rec.recognize_google(audio))
+        print(grec)
+        return grec
+    except Exception:
+        print("Couldn't recognise what you just said")
+        return "o"
 
 engine=pyttsx3.init()
 rate=engine.setProperty('rate', 175)
 voices=engine.getProperty('voices')
-#engine.setProperty('voices', voices[0].id)
+
 
 #print(voices[1])
 
 
 def speak(statement):
-    engine.say(statement)
+    for voice in voices:
+        i=1
+    engine.setProperty('i', voice.id)
     print(statement)
+    engine.say(statement)
     engine.runAndWait()
-    engine.stop()
 
 speak("""Welcome to Cisco Assisstant
       What can I do""")
 
-for voice in voices:
-    i=1
-engine.setProperty('i', voice.id)
-print(voice)
-engine.say('The quick brown fox jumped over the lazy dog.')
-engine.runAndWait()
 
 
 #while True:
 query=listen()
-
-print("This is a test")
+query=query.lower()
+if 'open youtube' in query:
+    speak('Opening youtube')
+    webbrowser.open('https://www.youtube.com')
+elif query.startswith('search for'):
+    searchMaterial = query.replace('search for', '')
+    speak("Here are your search results")
+    link = f'https://www.google.com/search?q={searchMaterial}'
+    webbrowser.open(link)
+elif query.startswith('search on youtube for'):
+    youtubelink = query.replace('search on youtube for', '')
+    speak("Here are the videos that match your query")
+    webbrowser.open(f'https://www.youtube.com/results?search_query={youtubelink}')
+    
     
         
