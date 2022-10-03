@@ -39,5 +39,7 @@ engine.runAndWait()
 
 #while True:
 query=listen()
+
+print("This is a test")
     
         
