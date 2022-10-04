@@ -31,12 +31,12 @@ voices=engine.getProperty('voices')
 def speak(statement):
     for voice in voices:
         i=1
-    engine.setProperty('i', voice.id)
+    engine.setProperty('voice', voice.id)
     print(statement)
     engine.say(statement)
     engine.runAndWait()
 
-speak("""Welcome to Cisco Assisstant
+speak("""Welcome to Cisco Assistant
       What can I do""")
 
 
