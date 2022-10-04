@@ -1,6 +1,7 @@
 import speech_recognition
 import pyttsx3
 import webbrowser
+from youtube_search import YoutubeSearch
 my_mic=speech_recognition.Microphone()
 rec=speech_recognition.Recognizer()
 
@@ -55,6 +56,13 @@ elif query.startswith('search on youtube for'):
     youtubelink = query.replace('search on youtube for', '')
     speak("Here are the videos that match your query")
     webbrowser.open(f'https://www.youtube.com/results?search_query={youtubelink}')
+elif query.startswith("play"):
+    query = query.replace("play", "")
+    result = YoutubeSearch(query, max_results=1).to_dict()
+    result = result[0]["url_suffix"]
+    vidLink = f"https://www.youtube.com{result}"
+    webbrowser.open(vidLink)
+
     
     
         
