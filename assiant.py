@@ -2,6 +2,7 @@ import speech_recognition
 import pyttsx3
 import webbrowser
 from youtube_search import YoutubeSearch
+import wikipedia
 my_mic=speech_recognition.Microphone()
 rec=speech_recognition.Recognizer()
 
@@ -62,6 +63,11 @@ elif query.startswith("play"):
     result = result[0]["url_suffix"]
     vidLink = f"https://www.youtube.com{result}"
     webbrowser.open(vidLink)
+elif query.startswith("give me information about"):
+    query = query.replace('give me information about', "")
+    info = wikipedia.summary(query, sentences=2)
+    speak(info)
+    
 
     
     
