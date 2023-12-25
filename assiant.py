@@ -37,7 +37,7 @@ def speak(statement):
     engine.say(statement)
     engine.runAndWait()
 
-speak("""Welcome to Cisco Assistant
+speak("""Welcome to B1 Assistant
       What can I do""")
 
 
